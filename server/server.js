@@ -10,12 +10,20 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+//  POST todos: Create new todo in DB
 app.post('/todos', (req, res) => {
   const todo = new Todo({
     text: req.body.text,
   });
   todo.save()
     .then(doc => res.send(doc))
+    .catch(err => res.status(400).send(err));
+});
+
+//  GET todos: List all todos
+app.get('/todos', (req, res) => {
+  Todo.find()
+    .then(todos => res.send({ todos }))
     .catch(err => res.status(400).send(err));
 });
 
