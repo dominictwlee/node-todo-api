@@ -5,12 +5,12 @@ const userSchema = new mongoose.Schema({
     type: 'String',
     required: true,
     validate: {
-      validator: function(value) {
+      validator: function emailValidate(value) {
         return /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value);
       },
-      message: '{VALUE} is not a valid email!'
-    }
-  }
+      message: '{VALUE} is not a valid email!',
+    },
+  },
 });
 
 const User = mongoose.model('user', userSchema);

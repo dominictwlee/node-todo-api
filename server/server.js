@@ -12,12 +12,12 @@ app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
   const todo = new Todo({
-    text: req.body.text
-  })
+    text: req.body.text,
+  });
   todo.save()
-    .then( doc => res.send(doc))
-    .catch( err => res.status(400).send(err));
-})
+    .then(doc => res.send(doc))
+    .catch(err => res.status(400).send(err));
+});
 
 app.listen(port, () => {
   console.log(`Server has started on port ${port}`);
