@@ -31,8 +31,7 @@ app.get('/todos', (req, res) => {
 
 //  GET todos: Query by ID
 app.get('/todos/:id', (req, res) => {
-  const id = req.params.id;
-
+  const { id } = req.params;
   Todo.findById(id)
     .then((todo) => {
       if (!todo) {
