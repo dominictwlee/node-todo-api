@@ -18,6 +18,18 @@ beforeEach((done) => {
     .then(() => done());
 });
 
+describe('GET /todos', () => {
+  it('should get a list of todos', (done) => {
+    request(app)
+      .get('/todos')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todos.length).toBe(3);
+      })
+      .end(done);
+  });
+});
+
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
     const text = 'Test todo';
@@ -40,18 +52,6 @@ describe('POST /todos', () => {
           done();
         }).catch(err => done(err));
       });
-  });
-
-  describe('GET /todos', () => {
-    it('should get a list of todos', (done) => {
-      request(app)
-        .get('/todos')
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.todos.length).toBe(3);
-        })
-        .end(done);
-    });
   });
 
   it('should not create todo with invalid body data', (done) => {
