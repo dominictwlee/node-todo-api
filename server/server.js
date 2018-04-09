@@ -65,13 +65,11 @@ app.delete('/todos/:id', (req, res) => {
     .catch(err => res.status(400).send(err));
 });
 
-//  Update todo by ID
+//  Patch todo by ID
 app.patch('/todos/:id', (req, res) => {
   const { id } = req.params;
   const { text, completed } = req.body;
   const body = { text, completed };
-  console.log(body);
-  // const body =
 
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
