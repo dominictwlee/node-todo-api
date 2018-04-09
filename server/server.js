@@ -65,6 +65,33 @@ app.delete('/todos/:id', (req, res) => {
     .catch(err => res.status(400).send(err));
 });
 
+//  Update todo by ID
+app.patch('/todos/:id', (req, res) => {
+  const { id } = req.params;
+  const { text, completed } = req.body;
+  const body = { text, completed };
+  console.log(body);
+  // const body =
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  if (typeof body.completed === 'boolean' && body.completed) {
+    body.completedAt = Date.now();
+  } else {
+    body.completed = false;
+  }
+  Todo.findByIdAndUpdate(id, { $set: body }, { new: true })
+    .then((todo) => {
+      if (!todo) {
+        return res.status(404).send();
+      }
+      res.send({ todo });
+    })
+    .catch(err => res.status(400).send(err));
+});
+
 app.listen(port, () => {
   console.log(`Server has started on port ${port}`);
 });
