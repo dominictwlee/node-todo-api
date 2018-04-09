@@ -51,10 +51,10 @@ describe('GET /todos', () => {
 
     it('should return 400 for non-object ids', (done) => {
       request(app)
-      .get('/todos/1234bgfdbdf')
-      .expect(400)
-      .end(done);
-    })
+        .get('/todos/1234bgfdbdf')
+        .expect(400)
+        .end(done);
+    });
   });
 });
 
