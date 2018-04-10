@@ -69,7 +69,9 @@ app.delete('/todos/:id', (req, res) => {
 app.patch('/todos/:id', (req, res) => {
   const { id } = req.params;
   const { text, completed } = req.body;
-  const body = { text, completed };
+
+  const body = (text === undefined) ? { completed } : { text, completed };
+  console.log(body);
 
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
@@ -79,6 +81,7 @@ app.patch('/todos/:id', (req, res) => {
     body.completedAt = Date.now();
   } else {
     body.completed = false;
+    body.completedAt = null;
   }
   Todo.findByIdAndUpdate(id, { $set: body }, { new: true })
     .then((todo) => {
