@@ -3,7 +3,6 @@ require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
-const bcrypt = require('bcryptjs');
 
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
@@ -117,6 +116,15 @@ app.post('/users/login', (req, res) => {
     .then(user => user.generateAuthToken()
       .then(token => res.header('x-auth', token).send(user)))
     .catch(err => res.status(400).send(err));
+});
+
+//  DELETE /users/me/token
+app.delete('/users/me/token', authenticate, (req, res) => {
+  req.user.removeToken(req.token).then(() => {
+    res.status(200).send();
+  }, () => {
+    res.status(400).send();
+  });
 });
 
 

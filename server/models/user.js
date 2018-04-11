@@ -85,6 +85,15 @@ UserSchema.statics.findByToken = function findUserByToken(token) {
   });
 };
 
+UserSchema.methods.removeToken = function removeTokenFromUser(token) {
+  const user = this;
+  return user.update({
+    $pull: {
+      tokens: { token },
+    },
+  });
+};
+
 UserSchema.pre('save', function hashPass(next) {
   const user = this;
 
