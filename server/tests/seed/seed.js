@@ -7,17 +7,6 @@ const { User } = require('./../../models/user');
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
 
-const todos = [{
-  text: 'first test todo',
-  _id: new ObjectID(),
-}, {
-  text: 'second test todo',
-  _id: new ObjectID(),
-  completed: true,
-  completedAt: Date.now(),
-},
-];
-
 const users = [{
   email: 'dom@example.com',
   _id: userOneId,
@@ -30,6 +19,19 @@ const users = [{
   email: 'sarah@example.com',
   _id: userTwoId,
   password: 'userTwoPass',
+},
+];
+
+const todos = [{
+  text: 'first test todo',
+  _id: new ObjectID(),
+  _creator: userOneId,
+}, {
+  text: 'second test todo',
+  _id: new ObjectID(),
+  completed: true,
+  completedAt: Date.now(),
+  _creator: userTwoId,
 },
 ];
 
