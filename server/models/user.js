@@ -63,7 +63,10 @@ UserSchema.statics.findByCredentials = function validateHash(email, password) {
 UserSchema.methods.generateAuthToken = function generateToken() {
   const user = this;
   const access = 'auth';
-  const token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET).toString();
+  const token = jwt.sign({
+    _id: user._id.toHexString(),
+    access,
+  }, process.env.JWT_SECRET).toString();
   user.tokens = user.tokens.concat([{ access, token }]);
   return user.save().then(() => token);
 };
