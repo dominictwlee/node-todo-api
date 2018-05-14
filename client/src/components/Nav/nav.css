@@ -1,0 +1,22 @@
+.navContainer {
+  min-height: 4rem;
+  min-width: 100%;
+  background: black;
+}
+
+.nav {
+  display: flex;
+  min-height: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navItem {
+  display: block;
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.navItem:nth-child(3) {
+  margin-left: auto;
+}
