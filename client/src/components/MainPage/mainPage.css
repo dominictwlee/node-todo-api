@@ -1,4 +1,6 @@
 .layout {
   display: flex;
   width: 60rem;
+  height: 100%;
+  flex-wrap: wrap;
 }

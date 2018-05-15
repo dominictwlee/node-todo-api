@@ -9,7 +9,8 @@ module.exports = merge(common, {
     historyApiFallback: true,
     hot: true,
     proxy: {
-      '/api': 'http://[::1]:3000'
+      '/users': 'http://[::1]:3000',
+      '/todos': 'http://[::1]:3000'
     }
   },
   module: {
