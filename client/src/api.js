@@ -16,3 +16,17 @@ export function authenticateUser(data) {
     })
   }).then(response => response.headers.get('x-auth'));
 }
+
+export function logoutUser(token) {
+  return fetch('/users/me/token', {
+    method: 'DELETE',
+    headers: new Headers({
+      'x-auth': token
+    })
+  })
+    .then(() => {
+      console.log(Response.status);
+      localStorage.removeItem('todoToken');
+    })
+    .catch(err => console.log(err));
+}

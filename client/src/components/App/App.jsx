@@ -4,13 +4,14 @@ import Modal from 'react-modal';
 import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
-import { authenticateUser, getTodos } from '../../api';
+import { authenticateUser, getTodos, logoutUser } from '../../api';
 
 import styles from './app.css';
 
 Modal.setAppElement('#app');
 
 export const ModalContext = React.createContext(() => {});
+export const UserContext = React.createContext(() => {});
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ class App extends Component {
       isLoggedIn: false,
       email: '',
       password: '',
-      // token: '',
       todos: [{}]
     };
 
@@ -31,6 +31,12 @@ class App extends Component {
       this.setState({
         [name]: value
       });
+    };
+
+    this.handleLogout = () => {
+      this.setState({ isLoggedIn: false });
+      const token = localStorage.getItem('todoToken');
+      logoutUser(token);
     };
 
     this.handleOpenModal = () => {
@@ -50,6 +56,7 @@ class App extends Component {
 
       authenticateUser(data)
         .then(token => {
+          localStorage.setItem('todoToken', token);
           getTodos(token)
             .then(docs => {
               this.setState({ todos: docs.todos, isLoggedIn: true });
@@ -57,28 +64,41 @@ class App extends Component {
             .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
+
+      this.handleCloseModal();
     };
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('todoToken');
+    if (token) {
+      getTodos(token).then(docs => {
+        this.setState({ todos: docs.todos, isLoggedIn: true }).catch(err => console.log(err));
+      });
+    }
   }
 
   render() {
     return (
-      <ModalContext.Provider value={this.handleOpenModal}>
-        <div className={styles.container}>
-          <div className={styles.layout}>
-            <Nav isLoggedIn={this.state.isLoggedIn} />
-            {this.state.isLoggedIn ? <Todos todos={this.state.todos} /> : null}
+      <UserContext.Provider value={this.handleLogout}>
+        <ModalContext.Provider value={this.handleOpenModal}>
+          <div className={styles.container}>
+            <div className={styles.layout}>
+              <Nav isLoggedIn={this.state.isLoggedIn} />
+              <Todos todos={this.state.todos} />
+            </div>
+            <Modal isOpen={this.state.showModal}>
+              <Form
+                email={this.state.email}
+                password={this.state.password}
+                handleInputChange={this.handleInputChange}
+                handleSubmit={this.handleSubmit}
+              />
+              <button onClick={this.handleCloseModal}>Close</button>
+            </Modal>
           </div>
-          <Modal isOpen={this.state.showModal}>
-            <Form
-              email={this.state.email}
-              password={this.state.password}
-              handleInputChange={this.handleInputChange}
-              handleSubmit={this.handleSubmit}
-            />
-            <button onClick={this.handleCloseModal}>Close</button>
-          </Modal>
-        </div>
-      </ModalContext.Provider>
+        </ModalContext.Provider>
+      </UserContext.Provider>
     );
   }
 }
