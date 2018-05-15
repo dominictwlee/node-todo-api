@@ -6,20 +6,20 @@ import styles from './todos.css';
 
 const Todos = props => (
   <React.Fragment>
-    <div>
+    <div className={styles.todoList}>
       {props.todos.filter(item => !item.completed).map(todo => (
-        <section key={shortid.generate()}>
-          <h1 className={styles.header}>{todo.text}</h1>
-          <h3 className={styles.header}>{`${todo.completed}`}</h3>
+        <section key={shortid.generate()} className={styles.todoCard}>
+          <h1>{todo.text}</h1>
+          <h3>{`${todo.completed}`}</h3>
         </section>
       ))}
     </div>
 
-    <div>
+    <div className={styles.todoList}>
       {props.todos.filter(item => item.completed).map(todo => (
-        <section key={shortid.generate()}>
-          <h1 className={styles.header}>{todo.text}</h1>
-          <h3 className={styles.header}>{`${todo.completed}`}</h3>
+        <section key={shortid.generate()} className={styles.todoCard}>
+          <h1>{todo.text}</h1>
+          <h3>{`${todo.completed}`}</h3>
         </section>
       ))}
     </div>

@@ -8,4 +8,5 @@
   width: 60rem;
   height: 100%;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
