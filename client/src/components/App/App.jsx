@@ -4,13 +4,13 @@ import Modal from 'react-modal';
 import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
+import { authenticateUser, getTodos } from '../../api';
 
 import styles from './app.css';
 
 Modal.setAppElement('#app');
 
 export const ModalContext = React.createContext(() => {});
-export const UserContext = React.createContext('');
 
 class App extends Component {
   constructor(props) {
@@ -18,10 +18,11 @@ class App extends Component {
 
     this.state = {
       showModal: false,
+      isLoggedIn: false,
       email: '',
       password: '',
-      isLoggedIn: false,
-      token: ''
+      // token: '',
+      todos: [{}]
     };
 
     this.handleInputChange = event => {
@@ -42,21 +43,18 @@ class App extends Component {
 
     this.handleSubmit = event => {
       event.preventDefault();
-
       const data = {
         email: this.state.email,
         password: this.state.password
       };
-      fetch('/users/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
-      })
-        .then(response => response.headers.get('x-auth'))
+
+      authenticateUser(data)
         .then(token => {
-          this.setState({ token, isLoggedIn: true });
+          getTodos(token)
+            .then(docs => {
+              this.setState({ todos: docs.todos, isLoggedIn: true });
+            })
+            .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
     };
@@ -64,25 +62,23 @@ class App extends Component {
 
   render() {
     return (
-      <UserContext.Provider value={this.state.token}>
-        <ModalContext.Provider value={this.handleOpenModal}>
-          <div className={styles.container}>
-            <div className={styles.layout}>
-              <Nav />
-              {this.state.isLoggedIn ? <Todos token={this.state.token} /> : null}
-            </div>
-            <Modal isOpen={this.state.showModal}>
-              <Form
-                email={this.state.email}
-                password={this.state.password}
-                handleInputChange={this.handleInputChange}
-                handleSubmit={this.handleSubmit}
-              />
-              <button onClick={this.handleCloseModal}>Close</button>
-            </Modal>
+      <ModalContext.Provider value={this.handleOpenModal}>
+        <div className={styles.container}>
+          <div className={styles.layout}>
+            <Nav isLoggedIn={this.state.isLoggedIn} />
+            {this.state.isLoggedIn ? <Todos todos={this.state.todos} /> : null}
           </div>
-        </ModalContext.Provider>
-      </UserContext.Provider>
+          <Modal isOpen={this.state.showModal}>
+            <Form
+              email={this.state.email}
+              password={this.state.password}
+              handleInputChange={this.handleInputChange}
+              handleSubmit={this.handleSubmit}
+            />
+            <button onClick={this.handleCloseModal}>Close</button>
+          </Modal>
+        </div>
+      </ModalContext.Provider>
     );
   }
 }
