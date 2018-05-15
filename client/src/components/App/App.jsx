@@ -7,31 +7,35 @@ import styles from './app.css';
 
 Modal.setAppElement('#app');
 
+export const ModalContext = React.createContext({
+  handleOpenModal: () => {}
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.handleOpenModal = () => {
+      this.setState({ showModal: true });
+    };
+
+    this.handleCloseModal = () => {
+      this.setState({ showModal: false });
+    };
+
     this.state = {
       showModal: false
     };
-
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-  }
-
-  handleOpenModal() {
-    this.setState({ showModal: true });
-  }
-
-  handleCloseModal() {
-    this.setState({ showModal: false });
   }
 
   render() {
     return (
-      <div className={styles.container}>
-        <MainPage openModal={this.handleOpenModal} closeModal={this.handleCloseModal} />
-        <Modal isOpen={this.state.showModal} />
-      </div>
+      <ModalContext.Provider value={this.handleOpenModal}>
+        <div className={styles.container}>
+          <MainPage />
+          <Modal isOpen={this.state.showModal} />
+        </div>
+      </ModalContext.Provider>
     );
   }
 }

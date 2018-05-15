@@ -1,15 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '../Button/Button';
 
 import styles from './nav.css';
 
-const Nav = props => (
+const Nav = () => (
   <div className={styles.navContainer}>
     <ul className={styles.nav}>
       <li className={styles.navItem}>
-        <Button name="Login" openModal={props.openModal} closeModal={props.closeModal} />
+        <Button name="Login" />
       </li>
       <li className={styles.navItem}>Logout</li>
       <li className={styles.navItem}>Save</li>
@@ -17,10 +16,5 @@ const Nav = props => (
     </ul>
   </div>
 );
-
-Nav.propTypes = {
-  openModal: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired
-};
 
 export default Nav;

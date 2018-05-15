@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = props => <button onClick={props.openModal}>{props.name}</button>;
+import { ModalContext } from '../App/App';
+
+const Button = props => (
+  <ModalContext.Consumer>
+    {handleOpenModal => <button onClick={handleOpenModal}>{props.name}</button>}
+  </ModalContext.Consumer>
+);
 
 Button.propTypes = {
-  name: PropTypes.string.isRequired,
-  openModal: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired
 };
 
 export default Button;
