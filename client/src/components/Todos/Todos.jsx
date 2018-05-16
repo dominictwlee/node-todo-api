@@ -1,35 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
 import shortid from 'shortid';
-import PropTypes from 'prop-types';
 
 import styles from './todos.css';
+import { completeTodo, getTodos } from '../../api';
+import { EditButtons } from '../Buttons/Buttons';
 
-const Todos = props => (
-  <React.Fragment>
-    <div className={styles.todoList}>
-      <h1 className={styles.category}>In Progress</h1>
-      {props.todos.filter(item => !item.completed).map(todo => (
-        <section key={shortid.generate()} className={styles.todoCard}>
-          <h3>{todo.text}</h3>
-          <h3>{`${todo.completed}`}</h3>
-        </section>
-      ))}
-    </div>
+class Todos extends Component {
+  constructor(props) {
+    super(props);
 
-    <div className={styles.todoList}>
-      <h1 className={styles.category}>Completed</h1>
-      {props.todos.filter(item => item.completed).map(todo => (
-        <section key={shortid.generate()} className={styles.todoCard}>
-          <h3>{todo.text}</h3>
-          <h3>{`${todo.completed}`}</h3>
-        </section>
-      ))}
-    </div>
-  </React.Fragment>
-);
+    this.state = {
+      todos: [{}]
+    };
 
-Todos.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+    this.handleUpdate = (token, todoId, data) => {
+      completeTodo(token, todoId, data);
+      getTodos(token)
+        .then(docs => {
+          this.setState({ todos: docs.todos });
+        })
+        .catch(err => console.log(err));
+    };
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('todoToken');
+    getTodos(token)
+      .then(docs => {
+        this.setState({ todos: docs.todos });
+      })
+      .catch(err => console.log(err));
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className={styles.todoList}>
+          <h1 className={styles.category}>In Progress</h1>
+          {this.state.todos.filter(item => !item.completed).map(todo => (
+            <section key={shortid.generate()} className={styles.todoCard}>
+              <h3>{todo.text}</h3>
+              <EditButtons itemId={todo._id} handleUpdate={this.handleUpdate} />
+            </section>
+          ))}
+        </div>
+
+        <div className={styles.todoList}>
+          <h1 className={styles.category}>Completed</h1>
+          {this.state.todos.filter(item => item.completed).map(todo => (
+            <section itemId={todo._id} key={shortid.generate()} className={styles.todoCard}>
+              <h3>{todo.text}</h3>
+            </section>
+          ))}
+        </div>
+      </React.Fragment>
+    );
+  }
+}
 
 export default Todos;

@@ -1,6 +1,6 @@
 .todoList {
   text-align: center;
-  flex: 0 1 25rem;
+  flex: 0 1 27rem;
 }
 
 .todoCard {
@@ -14,5 +14,5 @@
 }
 
 .category {
-  margin-top: 2rem;
+  padding-top: 2rem;
 }

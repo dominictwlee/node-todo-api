@@ -4,14 +4,14 @@ import Modal from 'react-modal';
 import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
-import { authenticateUser, getTodos, logoutUser } from '../../api';
+import { authenticateUser, logoutUser } from '../../api';
 
 import styles from './app.css';
 
 Modal.setAppElement('#app');
 
 export const ModalContext = React.createContext(() => {});
-export const UserContext = React.createContext(() => {});
+export const ApiContext = React.createContext({ logout: () => {} });
 
 class App extends Component {
   constructor(props) {
@@ -21,8 +21,7 @@ class App extends Component {
       showModal: false,
       isLoggedIn: false,
       email: '',
-      password: '',
-      todos: [{}]
+      password: ''
     };
 
     this.handleInputChange = event => {
@@ -57,34 +56,31 @@ class App extends Component {
       authenticateUser(data)
         .then(token => {
           localStorage.setItem('todoToken', token);
-          getTodos(token)
-            .then(docs => {
-              this.setState({ todos: docs.todos, isLoggedIn: true });
-            })
-            .catch(err => console.log(err));
+          this.setState({ isLoggedIn: true });
         })
         .catch(err => console.log(err));
 
       this.handleCloseModal();
     };
+
+    this.checkAuth = () => {
+      if (localStorage.getItem('todoToken')) {
+        this.setState({ isLoggedIn: true });
+      }
+    };
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('todoToken');
-    if (token) {
-      getTodos(token).then(docs => {
-        this.setState({ todos: docs.todos, isLoggedIn: true }).catch(err => console.log(err));
-      });
-    }
+    this.checkAuth();
   }
 
   render() {
     return (
-      <UserContext.Provider value={this.handleLogout}>
+      <ApiContext.Provider value={{ logout: this.handleLogout }}>
         <ModalContext.Provider value={this.handleOpenModal}>
           <div className={styles.layout}>
             <Nav isLoggedIn={this.state.isLoggedIn} />
-            <Todos todos={this.state.todos} />
+            {this.state.isLoggedIn ? <Todos /> : null}
           </div>
           <Modal isOpen={this.state.showModal}>
             <Form
@@ -96,7 +92,7 @@ class App extends Component {
             <button onClick={this.handleCloseModal}>Close</button>
           </Modal>
         </ModalContext.Provider>
-      </UserContext.Provider>
+      </ApiContext.Provider>
     );
   }
 }
