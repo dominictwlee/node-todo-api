@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
+import LoginInput from '../LoginInput/LoginInput';
+import TodoInput from '../TodoInput/TodoInput';
 import { authenticateUser, logoutUser } from '../../api';
 
 import styles from './app.css';
@@ -21,7 +23,9 @@ class App extends Component {
       showModal: false,
       isLoggedIn: false,
       email: '',
-      password: ''
+      password: '',
+      modalForm: '',
+      task: null
     };
 
     this.handleInputChange = event => {
@@ -40,6 +44,14 @@ class App extends Component {
 
     this.handleOpenModal = () => {
       this.setState({ showModal: true });
+    };
+
+    this.showTodoForm = () => {
+      this.setState({ modalForm: 'todo' });
+    };
+
+    this.showLoginForm = () => {
+      this.setState({ modalForm: 'login' });
     };
 
     this.handleCloseModal = () => {
@@ -75,20 +87,32 @@ class App extends Component {
   }
 
   render() {
+    let formInputs;
+    if (this.state.modalForm === 'login') {
+      formInputs = (
+        <LoginInput
+          email={this.state.email}
+          password={this.state.password}
+          handleInputChange={this.handleInputChange}
+        />
+      );
+    } else if (this.state.modalForm === 'todo') {
+      formInputs = <TodoInput task={this.state.task} handleInputChange={this.handleInputChange} />;
+    } else {
+      formInputs = null;
+    }
+
     return (
       <ApiContext.Provider value={{ logout: this.handleLogout }}>
-        <ModalContext.Provider value={this.handleOpenModal}>
+        <ModalContext.Provider
+          value={{ openModal: this.handleOpenModal, showLogin: this.showLoginForm, showTodo: this.showTodoForm }}
+        >
           <div className={styles.layout}>
             <Nav isLoggedIn={this.state.isLoggedIn} />
             {this.state.isLoggedIn ? <Todos /> : null}
           </div>
           <Modal isOpen={this.state.showModal}>
-            <Form
-              email={this.state.email}
-              password={this.state.password}
-              handleInputChange={this.handleInputChange}
-              handleSubmit={this.handleSubmit}
-            />
+            <Form handleSubmit={this.handleSubmit}>{formInputs}</Form>
             <button onClick={this.handleCloseModal}>Close</button>
           </Modal>
         </ModalContext.Provider>

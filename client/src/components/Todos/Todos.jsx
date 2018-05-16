@@ -62,6 +62,10 @@ class Todos extends Component {
           {this.state.todos.filter(item => item.completed).map(todo => (
             <section itemId={todo._id} key={shortid.generate()} className={styles.todoCard}>
               <h3>{todo.text}</h3>
+              <EditButtons itemId={todo._id} handleUpdate={this.handleUpdate}>
+                <CompleteButton itemId={todo._id} handleUpdate={this.handleUpdate} />
+                <DeleteButton itemId={todo._id} handleDelete={this.handleDelete} />
+              </EditButtons>
             </section>
           ))}
         </div>

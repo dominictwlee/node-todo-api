@@ -8,10 +8,34 @@ import { ModalContext, ApiContext } from '../App/App';
 
 import styles from './buttons.css';
 
+const AddButton = props => (
+  <ModalContext.Consumer>
+    {({ openModal, showTodo }) => (
+      <Button
+        variant="raised"
+        color="primary"
+        onClick={() => {
+          openModal();
+          showTodo();
+        }}
+      >
+        {props.children}
+      </Button>
+    )}
+  </ModalContext.Consumer>
+);
+
 const LoginButton = props => (
   <ModalContext.Consumer>
-    {handleOpenModal => (
-      <Button variant="raised" color="primary" onClick={handleOpenModal}>
+    {({ openModal, showLogin }) => (
+      <Button
+        variant="raised"
+        color="primary"
+        onClick={() => {
+          openModal();
+          showLogin();
+        }}
+      >
         {props.name}
       </Button>
     )}
@@ -92,7 +116,11 @@ DeleteButton.defaultProps = {
 };
 
 EditButtons.propTypes = {
-  children: PropTypes.func.isRequired
+  children: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export { LoginButton, LogoutButton, EditButtons, CompleteButton, DeleteButton };
+AddButton.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export { LoginButton, LogoutButton, EditButtons, CompleteButton, DeleteButton, AddButton };
