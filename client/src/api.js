@@ -43,3 +43,15 @@ export function completeTodo(token, id, data) {
     .then(response => console.log(response.json()))
     .catch(err => console.log(err));
 }
+
+export function deleteTodo(token, id) {
+  return fetch(`/todos/${id}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-auth': token
+    })
+  })
+    .then(response => console.log(response.json()))
+    .catch(err => console.log(err));
+}

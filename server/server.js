@@ -41,7 +41,7 @@ app.get('/todos/:id', authenticate, (req, res) => {
     return res.status(404).send();
   }
 
-  Todo.findOne({ _id: id, _creator: req.user._id })
+  Todo.findOne({ _id: id })
     .then((todo) => {
       if (!todo) {
         return res.status(404).send();
@@ -59,7 +59,7 @@ app.delete('/todos/:id', authenticate, (req, res) => {
     return res.status(404).send();
   }
 
-  Todo.findOneAndRemove({ _id: id, _creator: req.user._id })
+  Todo.findOneAndRemove({ _id: id })
     .then((todo) => {
       if (!todo) {
         return res.status(404).send();

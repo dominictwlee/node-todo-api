@@ -28,7 +28,24 @@ const LogoutButton = props => (
   </ApiContext.Consumer>
 );
 
-const EditButtons = props => {
+const DeleteButton = props => {
+  const token = localStorage.getItem('todoToken');
+  const todoId = props.itemId;
+
+  function deleteTask() {
+    props.handleDelete(token, todoId);
+  }
+
+  return (
+    <React.Fragment>
+      <button onClick={deleteTask}>
+        <Delete nativeColor="red" />
+      </button>
+    </React.Fragment>
+  );
+};
+
+const CompleteButton = props => {
   const token = localStorage.getItem('todoToken');
   const todoId = props.itemId;
   const data = { completed: true };
@@ -38,16 +55,15 @@ const EditButtons = props => {
   }
 
   return (
-    <div className={styles.editButtons}>
+    <React.Fragment>
       <button onClick={completeTask}>
         <Done nativeColor="green" />
       </button>
-      <button>
-        <Delete nativeColor="red" />
-      </button>
-    </div>
+    </React.Fragment>
   );
 };
+
+const EditButtons = ({ children }) => <div className={styles.editButtons}>{children}</div>;
 
 LoginButton.propTypes = {
   name: PropTypes.string.isRequired
@@ -57,13 +73,26 @@ LogoutButton.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-EditButtons.propTypes = {
+CompleteButton.propTypes = {
   handleUpdate: PropTypes.func.isRequired,
   itemId: PropTypes.string
 };
 
-EditButtons.defaultProps = {
+CompleteButton.defaultProps = {
   itemId: ''
 };
 
-export { LoginButton, LogoutButton, EditButtons };
+DeleteButton.propTypes = {
+  handleDelete: PropTypes.func.isRequired,
+  itemId: PropTypes.string
+};
+
+DeleteButton.defaultProps = {
+  itemId: ''
+};
+
+EditButtons.propTypes = {
+  children: PropTypes.func.isRequired
+};
+
+export { LoginButton, LogoutButton, EditButtons, CompleteButton, DeleteButton };
