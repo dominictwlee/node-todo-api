@@ -1,12 +1,18 @@
 .todoList {
-  min-width: 50%;
+  text-align: center;
+  flex: 0 1 25rem;
 }
 
 .todoCard {
-  border: 1px solid black;
+  composes: z-1 from '../../main.css';
+  margin: 1rem;
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 5rem;
+  min-height: 4rem;
+}
+
+.category {
+  margin-top: 2rem;
 }

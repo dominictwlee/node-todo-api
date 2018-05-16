@@ -82,21 +82,19 @@ class App extends Component {
     return (
       <UserContext.Provider value={this.handleLogout}>
         <ModalContext.Provider value={this.handleOpenModal}>
-          <div className={styles.container}>
-            <div className={styles.layout}>
-              <Nav isLoggedIn={this.state.isLoggedIn} />
-              <Todos todos={this.state.todos} />
-            </div>
-            <Modal isOpen={this.state.showModal}>
-              <Form
-                email={this.state.email}
-                password={this.state.password}
-                handleInputChange={this.handleInputChange}
-                handleSubmit={this.handleSubmit}
-              />
-              <button onClick={this.handleCloseModal}>Close</button>
-            </Modal>
+          <div className={styles.layout}>
+            <Nav isLoggedIn={this.state.isLoggedIn} />
+            <Todos todos={this.state.todos} />
           </div>
+          <Modal isOpen={this.state.showModal}>
+            <Form
+              email={this.state.email}
+              password={this.state.password}
+              handleInputChange={this.handleInputChange}
+              handleSubmit={this.handleSubmit}
+            />
+            <button onClick={this.handleCloseModal}>Close</button>
+          </Modal>
         </ModalContext.Provider>
       </UserContext.Provider>
     );
