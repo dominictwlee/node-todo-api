@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddIcon from '@material-ui/icons/Add';
 
-import { LoginButton, LogoutButton, AddButton } from '../Buttons/Buttons';
+import { LoginButton, LogoutButton } from '../Buttons/Buttons';
 
 import styles from './nav.css';
 
@@ -19,13 +18,6 @@ const Nav = props => (
           <LogoutButton name="Logout" />
         </li>
       </div>
-      <span>
-        <li className={styles.navItem}>
-          <AddButton>
-            <AddIcon style={{ fontSize: 36 }} nativeColor="black" />
-          </AddButton>
-        </li>
-      </span>
     </ul>
   </div>
 );

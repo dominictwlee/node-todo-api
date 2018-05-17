@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AddIcon from '@material-ui/icons/Add';
 
 const TodoInput = props => (
   <form onSubmit={props.handleAdd}>
@@ -14,7 +15,9 @@ const TodoInput = props => (
         placeholder="e.g. Go through React docs"
       />
     </label>
-    <input type="submit" value="submit" />
+    <button type="submit">
+      <AddIcon style={{ fontSize: 36 }} nativeColor="black" />
+    </button>
   </form>
 );
 
