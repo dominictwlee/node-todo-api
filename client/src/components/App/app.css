@@ -5,3 +5,22 @@
   justify-content: center;
   width: 100%;
 }
+
+.modal {
+  position: absolute;
+  top: 15rem;
+  left: 30rem;
+  right: 30rem;
+  bottom: 15rem;
+  outline: none;
+  background: white;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}

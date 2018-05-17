@@ -54,10 +54,10 @@ const LogoutButton = props => (
 
 const DeleteButton = props => {
   const token = localStorage.getItem('todoToken');
-  const todoId = props.itemId;
+  const { todoid } = props;
 
   function deleteTask() {
-    props.handleDelete(token, todoId);
+    props.handleDelete(token, todoid);
   }
 
   return (
@@ -71,11 +71,11 @@ const DeleteButton = props => {
 
 const CompleteButton = props => {
   const token = localStorage.getItem('todoToken');
-  const todoId = props.itemId;
+  const { todoid } = props;
   const data = { completed: true };
 
   function completeTask() {
-    props.handleUpdate(token, todoId, data);
+    props.handleUpdate(token, todoid, data);
   }
 
   return (
@@ -99,20 +99,20 @@ LogoutButton.propTypes = {
 
 CompleteButton.propTypes = {
   handleUpdate: PropTypes.func.isRequired,
-  itemId: PropTypes.string
+  todoid: PropTypes.string
 };
 
 CompleteButton.defaultProps = {
-  itemId: ''
+  todoid: ''
 };
 
 DeleteButton.propTypes = {
   handleDelete: PropTypes.func.isRequired,
-  itemId: PropTypes.string
+  todoid: PropTypes.string
 };
 
 DeleteButton.defaultProps = {
-  itemId: ''
+  todoid: ''
 };
 
 EditButtons.propTypes = {
@@ -120,7 +120,7 @@ EditButtons.propTypes = {
 };
 
 AddButton.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.object).isRequired
+  children: PropTypes.PropTypes.node.isRequired
 };
 
 export { LoginButton, LogoutButton, EditButtons, CompleteButton, DeleteButton, AddButton };

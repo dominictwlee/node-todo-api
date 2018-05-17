@@ -55,3 +55,16 @@ export function deleteTodo(token, id) {
     .then(response => console.log(response.json()))
     .catch(err => console.log(err));
 }
+
+export function addTodo(token, data) {
+  return fetch('/todos', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-auth': token
+    })
+  })
+    .then(response => console.log(response.json()))
+    .catch(err => console.log(err));
+}

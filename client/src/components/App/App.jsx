@@ -6,7 +6,7 @@ import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
 import LoginInput from '../LoginInput/LoginInput';
 import TodoInput from '../TodoInput/TodoInput';
-import { authenticateUser, logoutUser } from '../../api';
+import { authenticateUser, logoutUser, addTodo } from '../../api';
 
 import styles from './app.css';
 
@@ -25,7 +25,8 @@ class App extends Component {
       email: '',
       password: '',
       modalForm: '',
-      task: null
+      task: '',
+      todoAdded: false
     };
 
     this.handleInputChange = event => {
@@ -58,7 +59,7 @@ class App extends Component {
       this.setState({ showModal: false });
     };
 
-    this.handleSubmit = event => {
+    this.handleLogin = event => {
       event.preventDefault();
       const data = {
         email: this.state.email,
@@ -79,6 +80,16 @@ class App extends Component {
       if (localStorage.getItem('todoToken')) {
         this.setState({ isLoggedIn: true });
       }
+    };
+
+    this.handleAdd = event => {
+      event.preventDefault();
+      const token = localStorage.getItem('todoToken');
+      const body = { text: this.state.task };
+      addTodo(token, body);
+      this.setState({ todoAdded: true }, () => {
+        this.setState({ todoAdded: false });
+      });
     };
   }
 
@@ -109,10 +120,17 @@ class App extends Component {
         >
           <div className={styles.layout}>
             <Nav isLoggedIn={this.state.isLoggedIn} />
-            {this.state.isLoggedIn ? <Todos /> : null}
+            {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
           </div>
-          <Modal isOpen={this.state.showModal}>
-            <Form handleSubmit={this.handleSubmit}>{formInputs}</Form>
+          <Modal isOpen={this.state.showModal} className={styles.modal} overlayClassName={styles.backdrop}>
+            <Form
+              modalForm={this.state.modalForm}
+              task={this.state.task}
+              handleAdd={this.handleAdd}
+              handleLogin={this.handleLogin}
+            >
+              {formInputs}
+            </Form>
             <button onClick={this.handleCloseModal}>Close</button>
           </Modal>
         </ModalContext.Provider>
