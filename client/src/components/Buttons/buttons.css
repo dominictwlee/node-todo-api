@@ -1,3 +1,33 @@
+@value blueFive, redFive from '../../main.css';
+
 .editButtons > * {
   margin-left: 1.5rem;
+}
+
+.button {
+  composes: z-1 from '../../main.css';
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.loginButton {
+  composes: button;
+  background-color: blueFive;
+}
+
+.logoutButton {
+  composes: button;
+  background-color: redFive;
+  cursor: pointer;
+}
+
+.disabled {
+  composes: loginButton;
+  color: rgba(255, 255, 255, 0.43);
+  background-color: grey;
 }

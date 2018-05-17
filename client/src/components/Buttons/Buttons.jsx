@@ -1,38 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import Delete from '@material-ui/icons/DeleteForever';
 import Done from '@material-ui/icons/Done';
 
-import { ModalContext, ApiContext } from '../App/App';
+import { AppContext } from '../App/App';
 
 import styles from './buttons.css';
 
 const LoginButton = props => (
-  <ModalContext.Consumer>
-    {({ openModal, showLogin }) => (
-      <Button
-        variant="raised"
-        color="primary"
-        onClick={() => {
-          openModal();
-          showLogin();
-        }}
-      >
-        {props.name}
-      </Button>
-    )}
-  </ModalContext.Consumer>
+  <AppContext.Consumer>
+    {({ openModal, showLogin, isLoggedIn }) => {
+      const options = {};
+      if (isLoggedIn) {
+        options.disabled = 'disabled';
+      }
+      return (
+        <button
+          {...options}
+          className={isLoggedIn ? styles.disabled : styles.loginButton}
+          onClick={() => {
+            openModal();
+            showLogin();
+          }}
+        >
+          {props.name}
+        </button>
+      );
+    }}
+  </AppContext.Consumer>
 );
 
 const LogoutButton = props => (
-  <ApiContext.Consumer>
-    {({ logout }) => (
-      <Button variant="raised" color="secondary" onClick={logout}>
-        {props.name}
-      </Button>
-    )}
-  </ApiContext.Consumer>
+  <AppContext.Consumer>
+    {({ logout, isLoggedIn }) => {
+      const options = {};
+      if (!isLoggedIn) {
+        options.disabled = 'disabled';
+      }
+      return (
+        <button {...options} className={styles.logoutButton} onClick={logout}>
+          {props.name}
+        </button>
+      );
+    }}
+  </AppContext.Consumer>
 );
 
 const DeleteButton = props => {

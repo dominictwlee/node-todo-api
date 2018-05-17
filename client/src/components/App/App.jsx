@@ -12,7 +12,7 @@ import styles from './app.css';
 
 Modal.setAppElement('#app');
 
-export const ModalContext = React.createContext(() => {});
+export const AppContext = React.createContext(() => {});
 export const ApiContext = React.createContext({ logout: () => {} });
 
 class App extends Component {
@@ -114,27 +114,31 @@ class App extends Component {
     }
 
     return (
-      <ApiContext.Provider value={{ logout: this.handleLogout }}>
-        <ModalContext.Provider
-          value={{ openModal: this.handleOpenModal, showLogin: this.showLoginForm, showTodo: this.showTodoForm }}
-        >
-          <div className={styles.layout}>
-            <Nav isLoggedIn={this.state.isLoggedIn} />
-            {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
-          </div>
-          <Modal isOpen={this.state.showModal} className={styles.modal} overlayClassName={styles.backdrop}>
-            <Form
-              modalForm={this.state.modalForm}
-              task={this.state.task}
-              handleAdd={this.handleAdd}
-              handleLogin={this.handleLogin}
-            >
-              {formInputs}
-            </Form>
-            <button onClick={this.handleCloseModal}>Close</button>
-          </Modal>
-        </ModalContext.Provider>
-      </ApiContext.Provider>
+      <AppContext.Provider
+        value={{
+          openModal: this.handleOpenModal,
+          showLogin: this.showLoginForm,
+          showTodo: this.showTodoForm,
+          logout: this.handleLogout,
+          isLoggedIn: this.state.isLoggedIn
+        }}
+      >
+        <div className={styles.layout}>
+          <Nav isLoggedIn={this.state.isLoggedIn} />
+          {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
+        </div>
+        <Modal isOpen={this.state.showModal} className={styles.modal} overlayClassName={styles.backdrop}>
+          <Form
+            modalForm={this.state.modalForm}
+            task={this.state.task}
+            handleAdd={this.handleAdd}
+            handleLogin={this.handleLogin}
+          >
+            {formInputs}
+          </Form>
+          <button onClick={this.handleCloseModal}>Close</button>
+        </Modal>
+      </AppContext.Provider>
     );
   }
 }

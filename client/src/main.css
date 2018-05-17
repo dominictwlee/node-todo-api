@@ -1,3 +1,9 @@
+/* Color Scheme */
+
+@value blueFive: #35a7ff;
+@value redFive: #ff5964;
+@value greenFive: #6eeb83;
+
 /* Shadow Depths */
 
 .z-1 {
@@ -20,4 +26,5 @@ html {
   min-height: 100vh;
   min-width: 300px;
   font-size: 18px;
+  font-family: 'Roboto';
 }
