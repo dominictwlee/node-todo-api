@@ -1,18 +1,25 @@
 .modal {
-  position: absolute;
-  top: 15rem;
-  left: 30rem;
-  right: 30rem;
-  bottom: 15rem;
+  position: relative;
   outline: none;
-  background: white;
+  background: #f9fdff;
+  padding: 1.5rem;
+  flex: 0 1 10rem;
+  min-height: 17rem;
 }
 
 .backdrop {
+  padding-bottom: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.close {
+  text-align: right;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import CloseIcon from '@material-ui/icons/Close';
 
 import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
@@ -112,6 +113,11 @@ class App extends Component {
           {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
         </div>
         <Modal isOpen={this.state.showModal} className={styles.modal} overlayClassName={styles.backdrop}>
+          <div className={styles.close}>
+            <button onClick={this.handleCloseModal}>
+              <CloseIcon />
+            </button>
+          </div>
           <Form
             modalForm={this.state.modalForm}
             task={this.state.task}
@@ -124,7 +130,6 @@ class App extends Component {
               email={this.state.email}
             />
           </Form>
-          <button onClick={this.handleCloseModal}>Close</button>
         </Modal>
       </AppContext.Provider>
     );

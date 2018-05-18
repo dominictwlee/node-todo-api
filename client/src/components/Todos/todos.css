@@ -1,14 +1,17 @@
 .todoContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 0 7rem;
 }
 
 .todoList {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 30rem;
+  flex: 0 1 30rem;
+  height: inherit;
   justify-content: center;
 }
 

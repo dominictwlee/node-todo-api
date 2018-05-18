@@ -1,0 +1,42 @@
+@value blueFive from '../../main.css';
+
+.formContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.input {
+  flex: 0 1 20rem;
+  display: flex;
+  margin: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.textArea {
+  composes: z-1 from '../../main.css';
+  border: none;
+  background-color: #eeeeee;
+  color: black;
+  padding: 0.5rem 1rem;
+}
+
+.label {
+  width: 5rem;
+  font-weight: 500;
+}
+
+.submitContainer {
+  flex: 0 1 20rem;
+  text-align: center;
+}
+
+.submit {
+  composes: button from '../Buttons/buttons.css';
+  composes: z-2 from '../../main.css';
+  flex: 1 1 20rem;
+  background-color: blueFive;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}

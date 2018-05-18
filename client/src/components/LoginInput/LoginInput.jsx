@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './loginInput.css';
+
 const LoginInput = props => {
   console.log(props);
   return (
-    <React.Fragment>
-      <label htmlFor="email">
-        Email:
+    <div className={styles.formContainer}>
+      <section className={styles.input}>
+        <label htmlFor="email" className={styles.label}>
+          Email:
+        </label>
         <input
+          className={styles.textArea}
           id="email"
           name="email"
           type="email"
@@ -15,20 +20,30 @@ const LoginInput = props => {
           onChange={props.handleInputChange}
           placeholder="tom@example.com"
         />
-      </label>
+      </section>
 
-      <label htmlFor="password">
-        Password:
+      <section className={styles.input}>
+        <label htmlFor="password" className={styles.label}>
+          Password:
+        </label>
         <input
+          className={styles.textArea}
           id="password"
           name="password"
           type="password"
           value={props.password}
           onChange={props.handleInputChange}
         />
-      </label>
-      <input type="submit" value="submit" />
-    </React.Fragment>
+      </section>
+
+      <section className={styles.submitContainer}>
+        <div className={styles.submit}>
+          <button type="submit" value="submit">
+            Submit
+          </button>
+        </div>
+      </section>
+    </div>
   );
 };
 
