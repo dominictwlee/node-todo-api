@@ -107,7 +107,7 @@ class App extends Component {
           isLoggedIn: this.state.isLoggedIn
         }}
       >
-        <div className={styles.layout}>
+        <div>
           <Nav isLoggedIn={this.state.isLoggedIn} />
           {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
         </div>
