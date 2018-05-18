@@ -5,6 +5,7 @@
   padding: 1.5rem;
   flex: 0 1 10rem;
   min-height: 17rem;
+  opacity: 0;
 }
 
 .backdrop {
@@ -22,4 +23,13 @@
 
 .close {
   text-align: right;
+}
+
+.modalOpen {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.modalClose {
+  opacity: 0;
 }

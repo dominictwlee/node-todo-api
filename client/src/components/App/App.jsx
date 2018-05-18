@@ -112,7 +112,17 @@ class App extends Component {
           <Nav isLoggedIn={this.state.isLoggedIn} />
           {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
         </div>
-        <Modal isOpen={this.state.showModal} className={styles.modal} overlayClassName={styles.backdrop}>
+        <Modal
+          isOpen={this.state.showModal}
+          className={{
+            base: styles.modal,
+            afterOpen: styles.modalOpen,
+            beforeClose: styles.modalClose
+          }}
+          closeTimeoutMS={500}
+          overlayClassName={styles.backdrop}
+          after
+        >
           <div className={styles.close}>
             <button onClick={this.handleCloseModal}>
               <CloseIcon />
