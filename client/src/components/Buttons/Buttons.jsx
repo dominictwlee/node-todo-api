@@ -56,8 +56,8 @@ const DeleteButton = props => {
 
   return (
     <React.Fragment>
-      <button onClick={deleteTask}>
-        <Delete nativeColor="red" />
+      <button onClick={deleteTask} className={styles.circleButton}>
+        <Delete nativeColor="#f61221" />
       </button>
     </React.Fragment>
   );
@@ -74,8 +74,8 @@ const CompleteButton = props => {
 
   return (
     <React.Fragment>
-      <button onClick={completeTask}>
-        <Done nativeColor="green" />
+      <button onClick={completeTask} className={styles.circleButton}>
+        <Done nativeColor="#19e63b" />
       </button>
     </React.Fragment>
   );

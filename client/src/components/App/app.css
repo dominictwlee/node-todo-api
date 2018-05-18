@@ -1,8 +1,5 @@
 .layout {
-  display: flex;
   height: 100%;
-  flex-wrap: wrap;
-  justify-content: center;
   width: 100%;
 }
 

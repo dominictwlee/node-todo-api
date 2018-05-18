@@ -67,15 +67,15 @@ class Todos extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <main className={styles.todoContainer}>
         <div className={styles.todoList}>
-          <h1 className={styles.category}>In Progress</h1>
+          <h3 className={styles.category}>In Progress</h3>
 
           <TodoInput task={this.state.task} handleInputChange={this.handleInputChange} handleAdd={this.handleAdd} />
 
           {this.state.todos.filter(item => !item.completed).map(todo => (
             <section key={shortid.generate()} className={styles.todoCard}>
-              <h3>{todo.text}</h3>
+              <p>{todo.text}</p>
               <EditButtons handleUpdate={this.handleUpdate}>
                 <CompleteButton todoid={todo._id} handleUpdate={this.handleUpdate} />
                 <DeleteButton todoid={todo._id} handleDelete={this.handleDelete} />
@@ -85,10 +85,10 @@ class Todos extends Component {
         </div>
 
         <div className={styles.todoList}>
-          <h1 className={styles.category}>Completed</h1>
+          <h3 className={styles.category}>Completed</h3>
           {this.state.todos.filter(item => item.completed).map(todo => (
             <section todoid={todo._id} key={shortid.generate()} className={styles.todoCard}>
-              <h3>{todo.text}</h3>
+              <p>{todo.text}</p>
               <EditButtons todoid={todo._id} handleUpdate={this.handleUpdate}>
                 <CompleteButton todoid={todo._id} handleUpdate={this.handleUpdate} />
                 <DeleteButton todoid={todo._id} handleDelete={this.handleDelete} />
@@ -96,7 +96,7 @@ class Todos extends Component {
             </section>
           ))}
         </div>
-      </React.Fragment>
+      </main>
     );
   }
 }

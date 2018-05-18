@@ -1,6 +1,15 @@
+.todoContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 .todoList {
-  text-align: center;
-  flex: 0 1 27rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 30rem;
+  justify-content: center;
 }
 
 .todoCard {
@@ -11,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   min-height: 4rem;
+  flex: 1 1 20rem;
 }
 
 .category {

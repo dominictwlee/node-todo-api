@@ -5,7 +5,6 @@ import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
 import LoginInput from '../LoginInput/LoginInput';
-import TodoInput from '../TodoInput/TodoInput';
 import { authenticateUser, logoutUser, addTodo } from '../../api';
 
 import styles from './app.css';
@@ -98,21 +97,6 @@ class App extends Component {
   }
 
   render() {
-    let formInputs;
-    if (this.state.modalForm === 'login') {
-      formInputs = (
-        <LoginInput
-          email={this.state.email}
-          password={this.state.password}
-          handleInputChange={this.handleInputChange}
-        />
-      );
-    } else if (this.state.modalForm === 'todo') {
-      formInputs = <TodoInput task={this.state.task} handleInputChange={this.handleInputChange} />;
-    } else {
-      formInputs = null;
-    }
-
     return (
       <AppContext.Provider
         value={{
@@ -134,7 +118,11 @@ class App extends Component {
             handleAdd={this.handleAdd}
             handleLogin={this.handleLogin}
           >
-            {formInputs}
+            <LoginInput
+              handleInputChange={this.handleInputChange}
+              password={this.state.password}
+              email={this.state.email}
+            />
           </Form>
           <button onClick={this.handleCloseModal}>Close</button>
         </Modal>
