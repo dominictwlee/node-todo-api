@@ -119,7 +119,7 @@ class App extends Component {
             afterOpen: styles.modalOpen,
             beforeClose: styles.modalClose
           }}
-          closeTimeoutMS={500}
+          closeTimeoutMS={550}
           overlayClassName={styles.backdrop}
           after
         >
