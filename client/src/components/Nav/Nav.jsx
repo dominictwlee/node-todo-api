@@ -1,20 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { LoginButton, LogoutButton } from '../Buttons/Buttons';
+import { AuthButton } from '../Buttons/Buttons';
 
 import styles from './nav.css';
 
-const Nav = () => (
+const Nav = ({ isLoggedIn }) => (
   <div>
     <ul className={styles.nav}>
       <li className={styles.navItem}>
-        <LoginButton name="Login" />
+        <AuthButton name="Login" options={isLoggedIn ? { disabled: 'disabled' } : null} />
       </li>
       <li className={styles.navItem}>
-        <LogoutButton name="Logout" />
+        <AuthButton name="Logout" options={!isLoggedIn ? { disabled: 'disabled' } : null} />
       </li>
     </ul>
   </div>
 );
+
+Nav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired
+};
 
 export default Nav;

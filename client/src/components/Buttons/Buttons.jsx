@@ -7,22 +7,24 @@ import { AppContext } from '../App/App';
 
 import styles from './buttons.css';
 
-const LoginButton = props => (
+const AuthButton = props => (
   <AppContext.Consumer>
-    {({ openModal, showLogin, isLoggedIn }) => {
-      const options = {};
-      if (isLoggedIn) {
-        options.disabled = 'disabled';
+    {({ openModal, showLogin, logout }) => {
+      let btnStyle;
+
+      if (props.name === 'Login') {
+        btnStyle = styles.loginButton;
+      } else {
+        btnStyle = styles.logoutButton;
       }
+
+      const handleLogin = () => {
+        openModal();
+        showLogin();
+      };
+
       return (
-        <button
-          {...options}
-          className={isLoggedIn ? styles.disabled : styles.loginButton}
-          onClick={() => {
-            openModal();
-            showLogin();
-          }}
-        >
+        <button {...props.options} className={btnStyle} onClick={props.name === 'Login' ? handleLogin : logout}>
           {props.name}
         </button>
       );
@@ -30,21 +32,14 @@ const LoginButton = props => (
   </AppContext.Consumer>
 );
 
-const LogoutButton = props => (
-  <AppContext.Consumer>
-    {({ logout, isLoggedIn }) => {
-      const options = {};
-      if (!isLoggedIn) {
-        options.disabled = 'disabled';
-      }
-      return (
-        <button {...options} className={styles.logoutButton} onClick={logout}>
-          {props.name}
-        </button>
-      );
-    }}
-  </AppContext.Consumer>
-);
+AuthButton.propTypes = {
+  options: PropTypes.objectOf(PropTypes.string),
+  name: PropTypes.string.isRequired
+};
+
+AuthButton.defaultProps = {
+  options: null
+};
 
 const DeleteButton = props => {
   const token = localStorage.getItem('todoToken');
@@ -83,14 +78,6 @@ const CompleteButton = props => {
 
 const EditButtons = ({ children }) => <div className={styles.editButtons}>{children}</div>;
 
-LoginButton.propTypes = {
-  name: PropTypes.string.isRequired
-};
-
-LogoutButton.propTypes = {
-  name: PropTypes.string.isRequired
-};
-
 CompleteButton.propTypes = {
   handleUpdate: PropTypes.func.isRequired,
   todoid: PropTypes.string
@@ -113,4 +100,4 @@ EditButtons.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export { LoginButton, LogoutButton, EditButtons, CompleteButton, DeleteButton };
+export { EditButtons, CompleteButton, DeleteButton, AuthButton };

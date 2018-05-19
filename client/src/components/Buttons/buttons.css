@@ -26,11 +26,11 @@
   cursor: pointer;
 }
 
-.disabled {
+/* .disabled {
   composes: loginButton;
   color: rgba(255, 255, 255, 0.43);
   background-color: grey;
-}
+} */
 
 .circleButton {
   border-radius: 10000px;

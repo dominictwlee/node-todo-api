@@ -25,7 +25,6 @@ export function logoutUser(token) {
     })
   })
     .then(() => {
-      console.log(Response.status);
       localStorage.removeItem('todoToken');
     })
     .catch(err => console.log(err));
