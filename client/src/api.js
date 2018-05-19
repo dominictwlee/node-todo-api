@@ -39,7 +39,8 @@ export function completeTodo(token, id, data) {
       'x-auth': token
     })
   })
-    .then(response => console.log(response.json()))
+    .then(response => response.json())
+    .then(() => console.log('Todo Completed'))
     .catch(err => console.log(err));
 }
 
@@ -51,7 +52,8 @@ export function deleteTodo(token, id) {
       'x-auth': token
     })
   })
-    .then(response => console.log(response.json()))
+    .then(response => response.json())
+    .then(() => console.log('Todo Deleted'))
     .catch(err => console.log(err));
 }
 
@@ -64,6 +66,7 @@ export function addTodo(token, data) {
       'x-auth': token
     })
   })
-    .then(response => console.log(response.json()))
+    .then(response => response.json())
+    .then(() => console.log('Todo Added'))
     .catch(err => console.log(err));
 }
