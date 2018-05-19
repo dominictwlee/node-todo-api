@@ -1,9 +1,5 @@
 @value blueFive, redFive from '../../main.css';
 
-.editButtons > * {
-  margin-left: 1.5rem;
-}
-
 .button {
   composes: z-1 from '../../main.css';
   color: #ffffff;
@@ -33,7 +29,6 @@
 } */
 
 .circleButton {
-  border-radius: 10000px;
   border: none;
   height: 2.5rem;
   width: 2.5rem;

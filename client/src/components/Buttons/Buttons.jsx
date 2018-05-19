@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Delete from '@material-ui/icons/DeleteForever';
-import Done from '@material-ui/icons/Done';
 
 import { AppContext } from '../App/App';
 
@@ -41,63 +39,32 @@ AuthButton.defaultProps = {
   options: null
 };
 
-const DeleteButton = props => {
+const TaskButton = ({ todoid, handleTask, name, children }) => {
   const token = localStorage.getItem('todoToken');
-  const { todoid } = props;
+  const data = name === 'complete' ? { completed: true } : null;
 
-  function deleteTask() {
-    props.handleDelete(token, todoid);
+  function executeTask() {
+    handleTask(token, todoid, data);
   }
 
   return (
     <React.Fragment>
-      <button onClick={deleteTask} className={styles.circleButton}>
-        <Delete nativeColor="#f61221" />
+      <button onClick={executeTask} className={styles.circleButton}>
+        {children}
       </button>
     </React.Fragment>
   );
 };
 
-const CompleteButton = props => {
-  const token = localStorage.getItem('todoToken');
-  const { todoid } = props;
-  const data = { completed: true };
-
-  function completeTask() {
-    props.handleUpdate(token, todoid, data);
-  }
-
-  return (
-    <React.Fragment>
-      <button onClick={completeTask} className={styles.circleButton}>
-        <Done nativeColor="#19e63b" />
-      </button>
-    </React.Fragment>
-  );
+TaskButton.propTypes = {
+  todoid: PropTypes.string,
+  handleTask: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 };
 
-const EditButtons = ({ children }) => <div className={styles.editButtons}>{children}</div>;
-
-CompleteButton.propTypes = {
-  handleUpdate: PropTypes.func.isRequired,
-  todoid: PropTypes.string
-};
-
-CompleteButton.defaultProps = {
+TaskButton.defaultProps = {
   todoid: ''
 };
 
-DeleteButton.propTypes = {
-  handleDelete: PropTypes.func.isRequired,
-  todoid: PropTypes.string
-};
-
-DeleteButton.defaultProps = {
-  todoid: ''
-};
-
-EditButtons.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.object).isRequired
-};
-
-export { EditButtons, CompleteButton, DeleteButton, AuthButton };
+export { AuthButton, TaskButton };

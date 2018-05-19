@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
 import PropTypes from 'prop-types';
+import Done from '@material-ui/icons/Done';
+import Delete from '@material-ui/icons/DeleteForever';
 
 import styles from './todos.css';
 import { completeTodo, getTodos, deleteTodo, addTodo } from '../../api';
-import { EditButtons, DeleteButton, CompleteButton } from '../Buttons/Buttons';
+import { TaskButton } from '../Buttons/Buttons';
 import TodoInput from '../TodoInput/TodoInput';
 
 export const TodoContext = React.createContext(() => {});
@@ -76,10 +78,14 @@ class Todos extends Component {
           {this.state.todos.filter(item => !item.completed).map(todo => (
             <section key={shortid.generate()} className={styles.todoCard}>
               <p>{todo.text}</p>
-              <EditButtons handleUpdate={this.handleUpdate}>
-                <CompleteButton todoid={todo._id} handleUpdate={this.handleUpdate} />
-                <DeleteButton todoid={todo._id} handleDelete={this.handleDelete} />
-              </EditButtons>
+              <div>
+                <TaskButton todoid={todo._id} handleTask={this.handleUpdate} name="complete">
+                  <Done nativeColor="#19e63b" />
+                </TaskButton>
+                <TaskButton todoid={todo._id} handleTask={this.handleDelete} name="delete">
+                  <Delete nativeColor="#f61221" />
+                </TaskButton>
+              </div>
             </section>
           ))}
         </div>
@@ -89,10 +95,14 @@ class Todos extends Component {
           {this.state.todos.filter(item => item.completed).map(todo => (
             <section todoid={todo._id} key={shortid.generate()} className={styles.todoCard}>
               <p>{todo.text}</p>
-              <EditButtons todoid={todo._id} handleUpdate={this.handleUpdate}>
-                <CompleteButton todoid={todo._id} handleUpdate={this.handleUpdate} />
-                <DeleteButton todoid={todo._id} handleDelete={this.handleDelete} />
-              </EditButtons>
+              <div>
+                <TaskButton todoid={todo._id} handleTask={this.handleUpdate} name="complete">
+                  <Done nativeColor="#19e63b" />
+                </TaskButton>
+                <TaskButton todoid={todo._id} handleTask={this.handleDelete} name="delete">
+                  <Delete nativeColor="#f61221" />
+                </TaskButton>
+              </div>
             </section>
           ))}
         </div>
