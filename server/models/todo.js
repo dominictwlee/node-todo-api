@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const todoSchema = new mongoose.Schema({
   text: {
-    type: 'String',
+    type: String,
     required: true,
     trim: true,
     minlength: 1,
   },
   completed: {
-    type: 'Boolean',
+    type: Boolean,
     default: false,
   },
   completedAt: {
@@ -18,6 +18,10 @@ const todoSchema = new mongoose.Schema({
   _creator: {
     required: true,
     type: mongoose.Schema.Types.ObjectId,
+  },
+  stateId: {
+    type: String,
+    required: true,
   },
 });
 

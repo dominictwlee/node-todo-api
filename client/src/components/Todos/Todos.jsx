@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Done from '@material-ui/icons/Done';
 import Delete from '@material-ui/icons/DeleteForever';
+// import uuid from 'uuid';
 
 import styles from './todos.css';
 import { completeTodo, getTodos, deleteTodo, addTodo } from '../../api';
@@ -31,45 +32,38 @@ class Todos extends Component {
     this.handleGetAll = token => {
       getTodos(token)
         .then(docs => {
-          const tasks = docs.todos.map(todo => {
-            const task = todo;
-            task.tempid = shortid.generate();
-            return task;
-          });
-          this.setState({ todos: tasks });
+          this.setState({ todos: docs.todos });
+          console.log(this.state.todos);
         })
         .catch(err => console.log(err));
     };
 
-    this.handleUpdate = (token, todoId, data) => {
-      completeTodo(token, todoId, data);
+    this.handleUpdate = (token, todoid, data) => {
+      completeTodo(token, todoid, data);
       this.handleGetAll(token);
     };
 
-    this.handleDelete = (token, todoId) => {
-      deleteTodo(token, todoId);
-      this.handleGetAll(token);
+    this.handleDelete = (token, stateId) => {
+      deleteTodo(token, stateId);
+      this.setState(state => ({
+        todos: state.todos.filter(todo => todo.stateId !== stateId)
+      }));
     };
 
     this.handleAdd = event => {
       event.preventDefault();
       const token = localStorage.getItem('todoToken');
-      const body = { text: this.state.task };
+      const stateId = shortid.generate();
+      const body = { text: this.state.task, stateId };
       addTodo(token, body);
-      this.setState({ todos: [...this.state.todos, { text: this.state.task, tempid: shortid.generate() }] });
+      this.setState({ todos: [...this.state.todos, body] });
+      console.log(this.state.todos);
     };
   }
 
   componentDidMount() {
     const token = localStorage.getItem('todoToken');
     this.handleGetAll(token);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.todoAdded !== prevProps.todoAdded && this.props.todoAdded === true) {
-      const token = localStorage.getItem('todoToken');
-      this.handleGetAll(token);
-    }
   }
 
   render() {
@@ -84,10 +78,10 @@ class Todos extends Component {
             <section key={shortid.generate()} className={styles.todoCard}>
               <p>{todo.text}</p>
               <div>
-                <TaskButton todoid={todo._id} handleTask={this.handleUpdate} name="complete">
+                <TaskButton todoid={todo._id} stateId={todo.stateId} handleTask={this.handleUpdate} name="complete">
                   <Done nativeColor="#19e63b" />
                 </TaskButton>
-                <TaskButton todoid={todo._id} handleTask={this.handleDelete} name="delete">
+                <TaskButton todoid={todo._id} stateId={todo.stateId} handleTask={this.handleDelete} name="delete">
                   <Delete nativeColor="#f61221" />
                 </TaskButton>
               </div>
@@ -101,10 +95,10 @@ class Todos extends Component {
             <section todoid={todo._id} key={shortid.generate()} className={styles.todoCard}>
               <p>{todo.text}</p>
               <div>
-                <TaskButton todoid={todo._id} handleTask={this.handleUpdate} name="complete">
+                <TaskButton todoid={todo._id} stateId={todo.stateId} handleTask={this.handleUpdate} name="complete">
                   <Done nativeColor="#19e63b" />
                 </TaskButton>
-                <TaskButton todoid={todo._id} handleTask={this.handleDelete} name="delete">
+                <TaskButton todoid={todo._id} stateId={todo.stateId} handleTask={this.handleDelete} name="delete">
                   <Delete nativeColor="#f61221" />
                 </TaskButton>
               </div>
@@ -115,9 +109,5 @@ class Todos extends Component {
     );
   }
 }
-
-Todos.propTypes = {
-  todoAdded: PropTypes.bool.isRequired
-};
 
 export default Todos;

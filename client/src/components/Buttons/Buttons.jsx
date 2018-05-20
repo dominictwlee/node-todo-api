@@ -39,17 +39,17 @@ AuthButton.defaultProps = {
   options: null
 };
 
-const TaskButton = ({ todoid, handleTask, name, children }) => {
+const TaskButton = ({ stateId, handleTask, children }) => {
   const token = localStorage.getItem('todoToken');
-  const data = name === 'complete' ? { completed: true } : null;
+  console.log(stateId);
 
-  function executeTask() {
-    handleTask(token, todoid, data);
+  function executeHandleTask() {
+    handleTask(token, stateId);
   }
 
   return (
     <React.Fragment>
-      <button onClick={executeTask} className={styles.circleButton}>
+      <button onClick={executeHandleTask} className={styles.circleButton}>
         {children}
       </button>
     </React.Fragment>
@@ -57,14 +57,14 @@ const TaskButton = ({ todoid, handleTask, name, children }) => {
 };
 
 TaskButton.propTypes = {
-  todoid: PropTypes.string,
+  stateId: PropTypes.string,
   handleTask: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
 };
 
 TaskButton.defaultProps = {
-  todoid: ''
+  // todoid: ''
+  stateId: ''
 };
 
 export { AuthButton, TaskButton };

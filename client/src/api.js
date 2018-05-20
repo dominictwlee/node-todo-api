@@ -44,11 +44,11 @@ export function completeTodo(token, id, data) {
     .catch(err => console.log(err));
 }
 
-export function deleteTodo(token, id) {
-  return fetch(`/todos/${id}`, {
+export function deleteTodo(token, stateId) {
+  console.log(stateId);
+  return fetch(`/todos/${stateId}`, {
     method: 'DELETE',
     headers: new Headers({
-      'Content-Type': 'application/json',
       'x-auth': token
     })
   })

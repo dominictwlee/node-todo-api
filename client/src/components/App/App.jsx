@@ -6,7 +6,7 @@ import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
 import LoginInput from '../LoginInput/LoginInput';
-import { authenticateUser, logoutUser, addTodo } from '../../api';
+import { authenticateUser, logoutUser } from '../../api';
 
 import styles from './app.css';
 
@@ -80,16 +80,6 @@ class App extends Component {
       if (localStorage.getItem('todoToken')) {
         this.setState({ isLoggedIn: true });
       }
-    };
-
-    this.handleAdd = event => {
-      event.preventDefault();
-      const token = localStorage.getItem('todoToken');
-      const body = { text: this.state.task };
-      addTodo(token, body);
-      this.setState({ todoAdded: true }, () => {
-        this.setState({ todoAdded: false });
-      });
     };
   }
 

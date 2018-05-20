@@ -20,6 +20,7 @@ app.post('/todos', authenticate, (req, res) => {
     _creator: req.user._id,
     text: req.body.text,
     completed: req.body.completed,
+    stateId: req.body.stateId,
   });
   todo.save()
     .then(doc => res.send(doc))
@@ -55,11 +56,7 @@ app.get('/todos/:id', authenticate, (req, res) => {
 app.delete('/todos/:id', authenticate, (req, res) => {
   const { id } = req.params;
 
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Todo.findOneAndRemove({ _id: id })
+  Todo.findOneAndRemove({ stateId: id })
     .then((todo) => {
       if (!todo) {
         return res.status(404).send();
