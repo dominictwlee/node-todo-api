@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
-// import PropTypes from 'prop-types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Done from '@material-ui/icons/Done';
 import Delete from '@material-ui/icons/DeleteForever';
-// import uuid from 'uuid';
 
 import styles from './todos.css';
 import { completeTodo, getTodos, deleteTodo, addTodo } from '../../api';
@@ -69,22 +68,34 @@ class Todos extends Component {
       <main className={styles.todoContainer}>
         <div className={styles.todoList}>
           <h3 className={styles.category}>In Progress</h3>
-
           <TodoInput task={this.state.task} handleInputChange={this.handleInputChange} handleAdd={this.handleAdd} />
-
-          {this.state.todos.filter(item => !item.completed).map(todo => (
-            <section key={shortid.generate()} className={styles.todoCard}>
-              <p>{todo.text}</p>
-              <div>
-                <TaskButton todoid={todo._id} stateId={todo.stateId} handleTask={this.handleUpdate} name="complete">
-                  <Done nativeColor="#19e63b" />
-                </TaskButton>
-                <TaskButton todoid={todo._id} stateId={todo.stateId} handleTask={this.handleDelete} name="delete">
-                  <Delete nativeColor="#f61221" />
-                </TaskButton>
-              </div>
-            </section>
-          ))}
+          <TransitionGroup>
+            {this.state.todos.filter(item => !item.completed).map(({ stateId, _id, text }) => (
+              <CSSTransition
+                key={stateId}
+                timeout={600}
+                className={styles.todoCard}
+                classNames={{
+                  enter: styles.enter,
+                  enterActive: styles.enterActive,
+                  exit: styles.exit,
+                  exitActive: styles.exitActive
+                }}
+              >
+                <section>
+                  <p>{text}</p>
+                  <div>
+                    <TaskButton todoid={_id} stateId={stateId} handleTask={this.handleUpdate} name="complete">
+                      <Done nativeColor="#19e63b" />
+                    </TaskButton>
+                    <TaskButton todoid={_id} stateId={stateId} handleTask={this.handleDelete} name="delete">
+                      <Delete nativeColor="#f61221" />
+                    </TaskButton>
+                  </div>
+                </section>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </div>
 
         <div className={styles.todoList}>
