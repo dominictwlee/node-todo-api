@@ -31,7 +31,12 @@ class Todos extends Component {
     this.handleGetAll = token => {
       getTodos(token)
         .then(docs => {
-          this.setState({ todos: docs.todos });
+          const tasks = docs.todos.map(todo => {
+            const task = todo;
+            task.tempid = shortid.generate();
+            return task;
+          });
+          this.setState({ todos: tasks });
         })
         .catch(err => console.log(err));
     };
@@ -51,7 +56,7 @@ class Todos extends Component {
       const token = localStorage.getItem('todoToken');
       const body = { text: this.state.task };
       addTodo(token, body);
-      this.handleGetAll(token);
+      this.setState({ todos: [...this.state.todos, { text: this.state.task, tempid: shortid.generate() }] });
     };
   }
 

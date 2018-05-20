@@ -53,8 +53,7 @@ export function deleteTodo(token, id) {
     })
   })
     .then(response => response.json())
-    .then(() => console.log('Todo Deleted'))
-    .catch(err => console.log(err));
+    .then(() => console.log('Todo Deleted'));
 }
 
 export function addTodo(token, data) {

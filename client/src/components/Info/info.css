@@ -1,0 +1,13 @@
+.infoContainer {
+  composes: z-3 from '../../main.css';
+  max-width: 20rem;
+  margin: 5rem auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  align-items: center;
+}
+
+.spacing {
+  margin-top: 1rem;
+}
