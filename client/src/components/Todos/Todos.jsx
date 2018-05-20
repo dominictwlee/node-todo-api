@@ -33,7 +33,6 @@ class Todos extends Component {
       getTodos(token)
         .then(docs => {
           this.setState({ todos: docs.todos });
-          console.log(this.state.todos);
         })
         .catch(err => console.log(err));
     };
@@ -57,7 +56,6 @@ class Todos extends Component {
       const body = { text: this.state.task, stateId };
       addTodo(token, body);
       this.setState({ todos: [...this.state.todos, body] });
-      console.log(this.state.todos);
     };
   }
 
