@@ -39,11 +39,12 @@ AuthButton.defaultProps = {
   options: null
 };
 
-const TaskButton = ({ stateId, handleTask, children }) => {
+const TaskButton = ({ stateId, handleTask, name, children }) => {
   const token = localStorage.getItem('todoToken');
+  const updateData = name === 'complete' ? { completed: true } : null;
 
   function executeHandleTask() {
-    handleTask(token, stateId);
+    handleTask(token, stateId, updateData);
   }
 
   return (
@@ -57,6 +58,7 @@ const TaskButton = ({ stateId, handleTask, children }) => {
 
 TaskButton.propTypes = {
   stateId: PropTypes.string,
+  name: PropTypes.string.isRequired,
   handleTask: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 };

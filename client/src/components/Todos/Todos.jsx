@@ -32,9 +32,18 @@ class Todos extends Component {
         .catch(err => console.log(err));
     };
 
-    this.handleUpdate = (token, todoid, data) => {
-      completeTodo(token, todoid, data);
-      this.handleGetAll(token);
+    this.handleUpdate = (token, stateId, data) => {
+      completeTodo(token, stateId, data);
+      this.setState(state => ({
+        todos: state.todos.map(todo => {
+          if (todo.stateId === stateId) {
+            const completedTask = todo;
+            completedTask.completed = true;
+            return completedTask;
+          }
+          return todo;
+        })
+      }));
     };
 
     this.handleDelete = (token, stateId) => {

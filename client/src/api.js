@@ -30,8 +30,8 @@ export function logoutUser(token) {
     .catch(err => console.log(err));
 }
 
-export function completeTodo(token, id, data) {
-  return fetch(`/todos/${id}`, {
+export function completeTodo(token, stateId, data) {
+  return fetch(`/todos/${stateId}`, {
     method: 'PATCH',
     body: JSON.stringify(data),
     headers: new Headers({
@@ -45,7 +45,6 @@ export function completeTodo(token, id, data) {
 }
 
 export function deleteTodo(token, stateId) {
-  console.log(stateId);
   return fetch(`/todos/${stateId}`, {
     method: 'DELETE',
     headers: new Headers({
