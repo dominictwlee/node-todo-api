@@ -1,6 +1,7 @@
 .form {
   justify-content: center;
   display: flex;
+  min-width: inherit;
 }
 
 .text {

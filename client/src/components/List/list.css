@@ -3,7 +3,6 @@
   flex-wrap: wrap;
   align-items: center;
   flex: 0 1 30rem;
-  height: inherit;
   justify-content: center;
 }
 .todoCard {
@@ -16,25 +15,127 @@
   min-height: 4rem;
   flex: 1 1 20rem;
 }
+
 .category {
   padding-top: 2rem;
   flex: 1 0 100%;
   text-align: center;
 }
-.enter {
-  opacity: 0.01;
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
 }
 
-.enterActive {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
+@keyframes bounceOutDown {
+  20% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  40%,
+  45% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+}
+
+@keyframes bounceOutLeft {
+  20% {
+    opacity: 1;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.enter {
+  animation-name: bounceIn;
+  animation-duration: 750ms;
+
+  &.enterActive {
+    animation-name: bounceIn;
+    animation-duration: 750ms;
+  }
+}
+
+.completedEnter {
+  animation-name: slideInRight;
+  animation-duration: 400ms;
+
+  &.completedEnterActive {
+    animation-name: slideInRight;
+    animation-duration: 400ms;
+  }
 }
 
 .exit {
-  opacity: 1;
+  animation-name: bounceOutLeft;
+  animation-duration: 600ms;
+
+  &.exitActive {
+    animation-name: bounceOutLeft;
+    animation-duration: 600ms;
+  }
 }
 
-.exitActive {
-  opacity: 0;
-  transition: opacity 500ms ease-in;
+.completedExit {
+  animation-name: bounceOutDown;
+  animation-duration: 600ms;
+
+  &.completedExitActive {
+    animation-name: bounceOutDown;
+    animation-duration: 600ms;
+  }
 }

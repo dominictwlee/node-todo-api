@@ -91,9 +91,9 @@ class Todos extends Component {
         <List
           title="Completed"
           category="category"
-          enter="enter"
-          enterActive="enterActive"
-          exit="exit"
+          enter="completedEnter"
+          enterActive="completedEnterActive"
+          exit="completedExit"
           exitActive="exitActive"
           handleAdd={this.handleAdd}
           handleDelete={this.handleDelete}
