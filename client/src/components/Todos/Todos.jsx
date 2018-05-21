@@ -59,7 +59,7 @@ class Todos extends Component {
       const stateId = shortid.generate();
       const body = { text: this.state.task, stateId };
       addTodo(token, body);
-      this.setState({ todos: [...this.state.todos, body] });
+      this.setState(state => ({ todos: [...state.todos, body] }));
     };
   }
 
