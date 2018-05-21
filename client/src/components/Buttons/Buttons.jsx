@@ -7,7 +7,7 @@ import styles from './buttons.css';
 
 const AuthButton = props => (
   <AppContext.Consumer>
-    {({ openModal, showLogin, logout }) => {
+    {({ openModal, showLogin, logout, isLoggedIn, errorAlert }) => {
       let btnStyle;
 
       if (props.name === 'Login') {
@@ -17,8 +17,12 @@ const AuthButton = props => (
       }
 
       const handleLogin = () => {
-        openModal();
-        showLogin();
+        if (isLoggedIn) {
+          errorAlert.show('You are already logged in!');
+        } else {
+          openModal();
+          showLogin();
+        }
       };
 
       return (

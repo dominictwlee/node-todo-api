@@ -9,7 +9,7 @@ const Nav = ({ isLoggedIn }) => (
   <div>
     <ul className={styles.nav}>
       <li className={styles.navItem}>
-        <AuthButton name="Login" options={isLoggedIn ? { disabled: 'disabled' } : null} />
+        <AuthButton name="Login" />
       </li>
       <li className={styles.navItem}>
         <AuthButton name="Logout" options={!isLoggedIn ? { disabled: 'disabled' } : null} />

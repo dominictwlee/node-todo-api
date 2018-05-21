@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import PropTypes from 'prop-types';
 import CloseIcon from '@material-ui/icons/Close';
+import { withAlert } from 'react-alert';
 
 import Nav from '../Nav/Nav';
 import Todos from '../Todos/Todos';
@@ -68,10 +70,17 @@ class App extends Component {
 
       authenticateUser(data)
         .then(token => {
+          if (!token) {
+            throw new Error('Invalid token');
+          }
           localStorage.setItem('todoToken', token);
           this.setState({ isLoggedIn: true });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.props.alert.error('Sorry, either your username or password is incorrect. Please try again');
+
+          console.log(err);
+        });
 
       this.handleCloseModal();
     };
@@ -95,7 +104,8 @@ class App extends Component {
           showLogin: this.showLoginForm,
           showTodo: this.showTodoForm,
           logout: this.handleLogout,
-          isLoggedIn: this.state.isLoggedIn
+          isLoggedIn: this.state.isLoggedIn,
+          errorAlert: this.props.alert
         }}
       >
         <div>
@@ -135,4 +145,9 @@ class App extends Component {
     );
   }
 }
-export default App;
+
+App.propTypes = {
+  alert: PropTypes.object.isRequired
+};
+
+export default withAlert(App);
