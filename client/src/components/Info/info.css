@@ -1,6 +1,6 @@
 .infoContainer {
   composes: z-3 from '../../main.css';
-  max-width: 20rem;
+  max-width: 25rem;
   margin: 5rem auto;
   display: flex;
   flex-direction: column;
@@ -8,6 +8,10 @@
   align-items: center;
 }
 
-.spacing {
+.subheader {
+  margin-top: 1rem;
+}
+
+.accountInfo {
   margin-top: 1rem;
 }

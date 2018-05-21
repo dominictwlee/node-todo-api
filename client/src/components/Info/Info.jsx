@@ -6,9 +6,11 @@ import styles from './info.css';
 const Info = ({ header, instructions, username, pass }) => (
   <div className={styles.infoContainer}>
     <h3>{header}</h3>
-    <h6 className={styles.spacing}>{instructions}</h6>
-    <p>Username: {username}</p>
-    <p>Password: {pass}</p>
+    <p className={styles.subheader}>{instructions}</p>
+    <div className={styles.accountInfo}>
+      <p>Username: {username}</p>
+      <p>Password: {pass}</p>
+    </div>
   </div>
 );
 

@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { withAlert } from 'react-alert';
 
 import Nav from '../Nav/Nav';
+import Info from '../Info/Info';
 import Todos from '../Todos/Todos';
 import Form from '../Form/Form';
 import LoginInput from '../LoginInput/LoginInput';
@@ -110,7 +111,16 @@ class App extends Component {
       >
         <div>
           <Nav isLoggedIn={this.state.isLoggedIn} />
-          {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} alert={this.props.alert} /> : <div />}
+          {this.state.isLoggedIn ? (
+            <Todos todoAdded={this.state.todoAdded} alert={this.props.alert} />
+          ) : (
+            <Info
+              header="Demo Account"
+              instructions="Please login using the account info below:"
+              username="test@test.com"
+              pass="testing123"
+            />
+          )}
         </div>
         <Modal
           isOpen={this.state.showModal}
