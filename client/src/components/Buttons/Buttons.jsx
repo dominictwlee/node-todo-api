@@ -41,7 +41,6 @@ AuthButton.defaultProps = {
 
 const TaskButton = ({ stateId, handleTask, children }) => {
   const token = localStorage.getItem('todoToken');
-  console.log(stateId);
 
   function executeHandleTask() {
     handleTask(token, stateId);

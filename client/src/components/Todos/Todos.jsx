@@ -16,7 +16,7 @@ class Todos extends Component {
     super(props);
 
     this.state = {
-      todos: [{}],
+      todos: [],
       task: ''
     };
 
@@ -69,7 +69,7 @@ class Todos extends Component {
         <div className={styles.todoList}>
           <h3 className={styles.category}>In Progress</h3>
           <TodoInput task={this.state.task} handleInputChange={this.handleInputChange} handleAdd={this.handleAdd} />
-          <TransitionGroup>
+          <TransitionGroup component={null}>
             {this.state.todos.filter(item => !item.completed).map(({ stateId, _id, text }) => (
               <CSSTransition
                 key={stateId}
