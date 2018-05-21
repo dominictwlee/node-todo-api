@@ -110,7 +110,7 @@ class App extends Component {
       >
         <div>
           <Nav isLoggedIn={this.state.isLoggedIn} />
-          {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} /> : <div />}
+          {this.state.isLoggedIn ? <Todos todoAdded={this.state.todoAdded} alert={this.props.alert} /> : <div />}
         </div>
         <Modal
           isOpen={this.state.showModal}

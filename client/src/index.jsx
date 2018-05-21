@@ -8,7 +8,7 @@ import App from './components/App/App';
 import './main.css';
 
 const Root = () => (
-  <AlertProvider template={AlertTemplate}>
+  <AlertProvider template={AlertTemplate} timeout={2800}>
     <App />
   </AlertProvider>
 );

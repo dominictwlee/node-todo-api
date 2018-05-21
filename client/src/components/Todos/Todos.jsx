@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+import PropTypes from 'prop-types';
 
 import styles from './todos.css';
 import { completeTodo, getTodos, deleteTodo, addTodo } from '../../api';
@@ -55,11 +56,15 @@ class Todos extends Component {
 
     this.handleAdd = event => {
       event.preventDefault();
-      const token = localStorage.getItem('todoToken');
-      const stateId = shortid.generate();
-      const body = { text: this.state.task, stateId };
-      addTodo(token, body);
-      this.setState(state => ({ todos: [...state.todos, body] }));
+      if (this.state.task === '') {
+        this.props.alert.info("Can't leave entry blank");
+      } else {
+        const token = localStorage.getItem('todoToken');
+        const stateId = shortid.generate();
+        const body = { text: this.state.task, stateId };
+        addTodo(token, body);
+        this.setState(state => ({ todos: [...state.todos, body], task: '' }));
+      }
     };
   }
 
@@ -108,5 +113,9 @@ class Todos extends Component {
     );
   }
 }
+
+Todos.propTypes = {
+  alert: PropTypes.object.isRequired
+};
 
 export default Todos;
