@@ -1,0 +1,40 @@
+.todoList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 0 1 30rem;
+  height: inherit;
+  justify-content: center;
+}
+.todoCard {
+  composes: z-1 from '../../main.css';
+  margin: 1rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 4rem;
+  flex: 1 1 20rem;
+}
+.category {
+  padding-top: 2rem;
+  flex: 1 0 100%;
+  text-align: center;
+}
+.enter {
+  opacity: 0.01;
+}
+
+.enterActive {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.exit {
+  opacity: 1;
+}
+
+.exitActive {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
