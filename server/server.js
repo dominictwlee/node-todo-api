@@ -3,7 +3,7 @@ require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
-
+const path = require('path');
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
@@ -13,6 +13,8 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 //  POST todos: Create new todo in DB
 app.post('/todos', authenticate, (req, res) => {
@@ -124,6 +126,10 @@ app.delete('/users/me/token', authenticate, (req, res) => {
 //  Private GET Route
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
 app.listen(port, () => {
