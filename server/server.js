@@ -72,11 +72,6 @@ app.patch('/todos/:id', authenticate, (req, res) => {
   const { text, completed } = req.body;
 
   const body = (text === undefined) ? { completed } : { text, completed };
-  console.log(body);
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
 
   if (typeof body.completed === 'boolean' && body.completed) {
     body.completedAt = Date.now();
@@ -84,7 +79,7 @@ app.patch('/todos/:id', authenticate, (req, res) => {
     body.completed = false;
     body.completedAt = null;
   }
-  Todo.findOneAndUpdate({ _id: id, _creator: req.user._id }, { $set: body }, { new: true })
+  Todo.findOneAndUpdate({ stateId: id, _creator: req.user._id }, { $set: body }, { new: true })
     .then((todo) => {
       if (!todo) {
         return res.status(404).send();
